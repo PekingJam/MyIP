@@ -5,7 +5,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/jason5ng32/MyIP)
 ![GitHub forks](https://img.shields.io/github/forks/jason5ng32/myip)
 ![Docker Pulls](https://img.shields.io/docker/pulls/jason5ng32/myip)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fipcheck.ing&up_message=online&label=IPCheck.ing)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fipcheck.ing&up_message=online&label=IPinfo)
 ![PWA](https://img.shields.io/badge/PWA-Supported-blue)
 ![GitHub license](https://img.shields.io/github/license/jason5ng32/MyIP)
 
@@ -98,7 +98,7 @@ docker run -d -p 18966:18966 --name myip --restart always jason5ng32/myip:latest
 | `PORT` | 否 | `18966` | 程序运行的端口 |
 | `BING_MAP_API_KEY` | 否 | `""` | Bing 地图的 API Key，用于展示 IP 所在地的地图 |
 | `ALLOWED_DOMAINS` | 否 | `""` | 允许访问的域名，用逗号分隔，用于防止后端 API 被滥用 |
-| `IPChecking_API_KEY` | 否 | `""` | IPCheck.ing 的 API Key，用于获取精准的 IP 归属地信息 |
+| `IPChecking_API_KEY` | 否 | `""` | IPinfo 的 API Key，用于获取精准的 IP 归属地信息 |
 | `IPINFO_API_TOKEN` | 否 | `""` | IPInfo.io 的 API Token，用于通过 IPInfo.io 获取 IP 归属地信息 |
 | `KEYCDN_USER_AGENT` | 否 | `""` | KeyCDN 的 User Agent，用于通过 KeyCDN 获取 IP 归属地信息 |
 | `CLOUDFLARE_API` | 否 | `""` | Cloudflare 的 API Key，用于通过 Cloudflare 获取 AS 系统的信息 |

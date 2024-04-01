@@ -5,7 +5,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/jason5ng32/MyIP)
 ![GitHub forks](https://img.shields.io/github/forks/jason5ng32/myip)
 ![Docker Pulls](https://img.shields.io/docker/pulls/jason5ng32/myip)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fipcheck.ing&up_message=online&label=IPCheck.ing)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fipcheck.ing&up_message=online&label=IPinfo)
 ![PWA](https://img.shields.io/badge/PWA-Supported-blue)
 ![GitHub license](https://img.shields.io/github/license/jason5ng32/MyIP)
 
@@ -96,7 +96,7 @@ You can use the program without adding any environment variables, but if you wan
 | `PORT` | No | `18966` | The port on which the program runs |
 | `BING_MAP_API_KEY` | No | `""` | API Key for Bing Maps, used to display the location of the IP on a map |
 | `ALLOWED_DOMAINS` | No | `""` | Allowed domains for access, separated by commas, used to prevent misuse of the backend API |
-| `IPChecking_API_KEY` | No | `""` | API Key for IPCheck.ing, used to obtain accurate IP geolocation information |
+| `IPChecking_API_KEY` | No | `""` | API Key for IPinfo, used to obtain accurate IP geolocation information |
 | `IPINFO_API_TOKEN` | No | `""` | API Token for IPInfo.io, used to obtain IP geolocation information through IPInfo.io |
 | `KEYCDN_USER_AGENT` | No | `""` | User Agent for KeyCDN, used to obtain IP geolocation information through KeyCDN |
 | `CLOUDFLARE_API` | No | `""` | API Key for Cloudflare, used to obtain AS system information through Cloudflare |

@@ -293,7 +293,7 @@ export default {
       isCardsCollapsed: JSON.parse(localStorage.getItem('isCardsCollapsed')) || false,
       placeholderSizes: [12, 8, 6, 8, 4],
       sources: [
-        { id: 0, text: 'IPCheck.ing', enabled: true },
+        { id: 0, text: 'IPinfo', enabled: true },
         { id: 1, text: 'IPinfo.io', enabled: true },
         { id: 2, text: 'IP-API.com', enabled: true },
         { id: 3, text: 'IPAPI.co', enabled: true },
@@ -546,10 +546,10 @@ export default {
         const fullIp = data.ip;
         const ip = fullIp.includes(',') ? fullIp.split(',')[0] : fullIp;
         this.IPArray = [...this.IPArray, ip];
-        this.ipDataCards[1].source = "IPCheck.ing";
+        this.ipDataCards[1].source = "IPinfo";
         this.fetchIPDetails(1, ip);
       } catch (error) {
-        console.error("Error fetching IP from IPCheck.ing:", error);
+        console.error("Error fetching IP from IPinfo:", error);
         this.getIPFromUpai(); // 如果发生错误，调用 getIPFromUpai
       }
     },
@@ -848,9 +848,9 @@ export default {
           this.getIPFromUpai(card);
           this.$trackEvent('IPCheck', 'RefreshClick', 'Upai');
           break;
-        case "IPCheck.ing":
+        case "IPinfo":
           this.getIPFromGCR(card);
-          this.$trackEvent('IPCheck', 'RefreshClick', 'IPCheck.ing');
+          this.$trackEvent('IPCheck', 'RefreshClick', 'IPinfo');
           break;
         case "TaoBao":
           this.getIPFromTaobao(card);

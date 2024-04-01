@@ -39,7 +39,7 @@ export default (req, res) => {
 
     const key = process.env.IPChecking_API_KEY;
 
-    // 构建请求 IPCheck.ing 的 URL
+    // 构建请求 IPinfo 的 URL
     const url = new URL(`https://api.ipcheck.ing/ipinfo?key=${key}&ip=${ipAddress}&lang=${lang}`);
 
     get(url, apiRes => {
