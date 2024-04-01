@@ -406,7 +406,7 @@ export default {
         },
       ],
       isEnvBingMapKey: false,
-      isMapShown: false,
+      isMapShown: true,
       ipDataCache: new Map(),
       copiedStatus: {},
       bingMapLanguage: this.$Lang,
