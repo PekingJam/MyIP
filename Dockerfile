@@ -2,6 +2,7 @@
 FROM node:20-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install
 COPY . .
 RUN npm run build
