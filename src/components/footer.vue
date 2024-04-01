@@ -8,13 +8,13 @@
       </p>
     </div>
 
-    <div id="about" class="text-center mb-2">
-      <a class="link link-underline-offset link-underline-opacity-0" :class="[isDarkMode ? 'link-info' : 'link-dark']"
-        data-bs-toggle="offcanvas" href="#About" role="button" aria-controls="About"
-        @click="$trackEvent('Footer', 'FooterClick', 'About');">
-        {{ $t('about.Title') }} <i class="bi bi-arrow-left-circle-fill"></i>
-      </a>
-    </div>
+<!--    <div id="about" class="text-center mb-2">-->
+<!--      <a class="link link-underline-offset link-underline-opacity-0" :class="[isDarkMode ? 'link-info' : 'link-dark']"-->
+<!--        data-bs-toggle="offcanvas" href="#About" role="button" aria-controls="About"-->
+<!--        @click="$trackEvent('Footer', 'FooterClick', 'About');">-->
+<!--        {{ $t('about.Title') }} <i class="bi bi-arrow-left-circle-fill"></i>-->
+<!--      </a>-->
+<!--    </div>-->
 
 
     <div class="offcanvas offcanvas-end mt-5" :class="[isMobile ? ' w-100' : '']" tabindex="-1" id="About"
@@ -102,8 +102,11 @@
 
     <div id="copyright" v-if="!siteValidate">
       <p class="text-center fs-6 fw-light" style="opacity: 0.5;">
-        {{ $t('page.copyRightName') }} <a :href="$t('page.copyRightLink')" class="link-underline-light" target="_blank"
-          :class="[isDarkMode ? 'dark-mode link-light' : 'link-dark']">{{ $t('page.copyRightLinkName') }}</a>
+        <a :href="'https://beian.miit.gov.cn/'" class="link-underline-light" target="_blank"
+           :class="[isDarkMode ? 'dark-mode link-light' : 'link-dark']">渝ICP备2022007661号-2</a>
+                <img src="https://drive.dandaner.cn/d/blog/beian/beian.png" alt="备案图片" />
+        <a :href="'https://beian.mps.gov.cn/#/query/webSearch'" class="link-underline-light" target="_blank"
+           :class="[isDarkMode ? 'dark-mode link-light' : 'link-dark']">渝公网安备50011802010706号</a>
       </p>
     </div>
   </footer>
