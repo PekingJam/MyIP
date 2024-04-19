@@ -9,7 +9,28 @@
     "SpeedTest": "Speed Test",
     "PingTest": "Global Latency",
     "MTRTest": "MTR Test",
-    "RuleTest": "Rule Test"
+    "RuleTest": "Rule Test",
+    "AdvancedTools": "Advanced Tools"
+  },
+  "advancedtools": {
+    "Title": "Advanced Tools",
+    "Note": "Tools that are used relatively infrequently, but are very useful when performing network testing.",
+    "PingTestNote": "Global Ping value test",
+    "MTRTestNote": "Global MTR route test",
+    "DNSResolverNote": "Real-time multi-channel DNS resolution",
+    "RuleTestNote": "Check the rule settings of proxy software"
+  },
+  "dnsresolver": {
+    "Title": "DNS Resolution",
+    "Note": "In some regions, due to political or commercial reasons, some operators may contaminate certain domain names, resulting in incorrect results when accessed directly. Using DNS resolution checks will help you inspect the resolution results of domain names from well-known DNS providers around the world. Among the built-in DNS tests, some providers are from China, whose DNS resolution results may be contaminated. Please be discerning.",
+    "Note2": "Please enter a URL or domain name to start resolution:",
+    "Placeholder": "URL or Domain Name",
+    "Run": "Run",
+    "invalidURL": "Invalid URL or Domain Name",
+    "fetchError": "Unable to fetch resolution results",
+    "Provider": "DNS Provider",
+    "Result": "Resolution Result",
+    "Record": "Record"
   },
   "ruletest": {
     "Title": "Rule Test",
@@ -24,7 +45,7 @@
     "RefreshConnectivityTests": "Refresh Connectivity Tests",
     "RefreshWebRTC": "Refresh WebRTC Test",
     "RefreshDNSLeakTest": "Refresh DNS Leak Test",
-    "StartSpeedTest": "Start Speed Test",
+    "SpeedTestButton": "Start/Pause Speed Test",
     "ToggleMaps": "Show/Hide Maps",
     "SourceSelect": "Select IP Geolocation Source",
     "ShowASNInfo": "Show AS Details",
@@ -120,7 +141,7 @@
   "speedtest": {
     "id": "speedtest",
     "Title": "Speed Test",
-    "Note": "Speed test will be done via Cloudflare's edge network, which may take a long time. If your network is located in mainland China, the data may be biased. The speed test results are for reference only, the actual speed will be faster.",
+    "Note": "Speed test will be done via Cloudflare's edge network, which may take a long time. If your network is located in mainland China, the data may be biased. The speed test results are for reference only, the actual speed will be faster. You can choose the packet size for download and upload tests. By default, the speed test will perform 4 rounds of packet uploads and downloads, please be mindful of data usage.",
     "Download": "Download",
     "Upload": "Upload",
     "Latency": "Latency",
@@ -196,7 +217,11 @@
     "RefreshConnectivityTests": "Refresh Connectivity Tests",
     "RefreshWebRTC": "Refresh WebRTC Test",
     "RefreshDNSLeakTest": "Refresh DNS Leak Test",
-    "StartSpeedTest": "Start Speed Test",
+    "SpeedTestButton": "Start/Pause Speed Test",
+    "PingTest": "Open Global Latency Test panel",
+    "MTRTest": "Open MTR Test panel",
+    "RuleTest": "Open Rule Test panel",
+    "DNSResolver": "Open DNS Resolution panel",
     "ToggleMaps": "Toggle Maps",
     "IPCheck": "IP Check",
     "AddBingMapKey": "Add Bing Map API Key",
@@ -485,6 +510,24 @@
           {
             "type": "improve",
             "change": "Some Improvements"
+          }
+        ]
+      },
+      {
+        "version": "v3.6",
+        "date": "Mar 10, 2024",
+        "content": [
+          {
+            "type": "add",
+            "change": "Added DNS resolution feature"
+          },
+          {
+            "type": "improve",
+            "change": "Optimized home page structure, advanced features are now collapsible"
+          },
+          {
+            "type": "improve",
+            "change": "Optimized program logic"
           }
         ]
       }

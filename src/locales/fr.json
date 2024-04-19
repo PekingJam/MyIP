@@ -9,7 +9,28 @@
         "SpeedTest": "Test de vitesse",
         "PingTest": "Latence mondiale",
         "MTRTest": "Test MTR",
-        "RuleTest": "Test de règles"
+        "RuleTest": "Test de règles",
+        "AdvancedTools": "Outils avancés"
+    },
+    "advancedtools": {
+        "Title": "Outils avancés",
+        "Note": "Certains outils sont utilisés relativement rarement, mais sont très utiles lors des tests de réseaux.",
+        "PingTestNote": "Test de la valeur Ping mondiale",
+        "MTRTestNote": "Test de route MTR mondial",
+        "DNSResolverNote": "Résolution DNS multi-canal en temps réel",
+        "RuleTestNote": "Vérifiez les paramètres de règles du logiciel de proxy"
+    },
+    "dnsresolver": {
+        "Title": "Résolution DNS",
+        "Note": "Dans certaines régions, pour des raisons politiques ou commerciales, certains opérateurs peuvent contaminer certains noms de domaine, entraînant des résultats incorrects lorsqu'ils sont accédés directement. L'utilisation de vérifications de résolution DNS vous aidera à inspecter les résultats de résolution de noms de domaine auprès de fournisseurs DNS renommés dans le monde entier. Parmi les tests DNS intégrés, certains fournisseurs sont originaires de Chine, dont les résultats de résolution DNS peuvent être contaminés. Veuillez faire preuve de discernement.",
+        "Note2": "Veuillez entrer une URL ou un nom de domaine pour commencer la résolution :",
+        "Placeholder": "URL ou Nom de Domaine",
+        "Run": "Exécuter",
+        "invalidURL": "URL ou Nom de Domaine invalide",
+        "fetchError": "Impossible de récupérer les résultats de résolution",
+        "Provider": "Fournisseur DNS",
+        "Result": "Résultat de la Résolution",
+        "Record": "Enregistrement"
     },
     "ruletest": {
         "Title": "Test de règles",
@@ -24,7 +45,7 @@
         "RefreshConnectivityTests": "Actualiser les tests de connectivité",
         "RefreshWebRTC": "Actualiser le test WebRTC",
         "RefreshDNSLeakTest": "Actualiser le test de fuite DNS",
-        "StartSpeedTest": "Démarrer le test de vitesse",
+        "SpeedTestButton": "Démarrer/Pause le test de vitesse",
         "ToggleMaps": "Afficher/Masquer les cartes",
         "SourceSelect": "Sélectionner la source de géolocalisation IP",
         "ShowASNInfo": "Afficher les détails AS",
@@ -120,7 +141,7 @@
     "speedtest": {
         "id": "speedtest",
         "Title": "Test de vitesse",
-        "Note": "Le test de vitesse sera effectué via le réseau de bordure de Cloudflare, ce qui peut prendre beaucoup de temps. Si votre réseau est situé en Chine continentale, les données peuvent être biaisées. Les résultats du test de vitesse sont donnés à titre indicatif, la vitesse réelle sera plus rapide.",
+        "Note": "Le test de vitesse sera effectué via le réseau de bordure de Cloudflare, ce qui peut prendre beaucoup de temps. Si votre réseau est situé en Chine continentale, les données peuvent être biaisées. Les résultats du test de vitesse sont donnés à titre indicatif, la vitesse réelle sera plus rapide. Vous pouvez choisir la taille des paquets pour les tests de téléchargement et d'upload. Par défaut, le test de vitesse effectuera 4 tours de téléchargements et d'uploads de paquets, veuillez faire attention à la consommation de données.",
         "Download": "Téléchargement",
         "Upload": "Téléversement",
         "Latency": "Latence",
@@ -196,7 +217,11 @@
         "RefreshConnectivityTests": "Actualiser les tests de connectivité",
         "RefreshWebRTC": "Actualiser le test WebRTC",
         "RefreshDNSLeakTest": "Actualiser le test de fuite DNS",
-        "StartSpeedTest": "Démarrer le test de vitesse",
+        "SpeedTestButton": "Démarrer/Pause le test de vitesse",
+        "PingTest": "Ouvrir le Test de latence mondial",
+        "MTRTest": "Ouvrir le Test MTR",
+        "RuleTest": "Ouvrir le Test de régles",
+        "DNSResolver": "Ouvrir le Résolution DNS",
         "ToggleMaps": "Activer/désactiver les cartes",
         "IPCheck": "Vérification IP",
         "AddBingMapKey": "Ajouter une clé API Bing Map",
@@ -485,6 +510,24 @@
                     {
                         "type": "improve",
                         "change": "Quelques améliorations"
+                    }
+                ]
+            },
+            {
+                "version": "v3.6",
+                "date": "Mar 10, 2024",
+                "content": [
+                    {
+                        "type": "add",
+                        "change": "Ajout de la fonction de résolution DNS"
+                    },
+                    {
+                        "type": "improve",
+                        "change": "Optimisation de la structure de la page d'accueil, les fonctionnalités avancées sont désormais repliables"
+                    },
+                    {
+                        "type": "improve",
+                        "change": "Optimisation de la logique du programme"
                     }
                 ]
             }

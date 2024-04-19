@@ -9,7 +9,28 @@
     "SpeedTest": "网速测试",
     "PingTest": "全球延迟",
     "MTRTest": "MTR 测试",
-    "RuleTest": "分流测试"
+    "RuleTest": "分流测试",
+    "AdvancedTools": "高级工具"
+  },
+  "advancedtools": {
+    "Title": "高级工具",
+    "Note": "一些使用频率相对较低，但在进行网络测试时，非常有用的工具。",
+    "PingTestNote": "全球的 Ping 值测试",
+    "MTRTestNote": "全球的 MTR 路由测试",
+    "DNSResolverNote": "实时多渠道 DNS 解析",
+    "RuleTestNote": "检查代理软件的规则设置"
+  },
+  "dnsresolver": {
+    "Title": "DNS 解析",
+    "Note": "在一些地区，某些运营商可能会因为政治原因或者商业原因，对一些域名进行污染，以至于直接进行访问的时候，无法返回正确的结果。使用 DNS 解析检查，将帮助你从全球各个知名的 DNS 厂商里检查域名的解析结果。在检测内置的 DNS 中，有一部分服务商来自中国，其 DNS 解析的结果可能会受到污染。请注意鉴别。",
+    "Note2": "请输入 URL 或域名，开始进行解析：",
+    "Placeholder": "URL 或域名",
+    "Run": "解析",
+    "invalidURL": "无效的 URL 或域名",
+    "fetchError": "无法获取解析结果",
+    "Provider": "DNS 服务商",
+    "Result": "解析结果",
+    "Record": "记录"
   },
   "ruletest": {
     "Title": "分流测试",
@@ -24,7 +45,7 @@
     "RefreshConnectivityTests": "刷新连通性测试",
     "RefreshWebRTC": "刷新 WebRTC 测试",
     "RefreshDNSLeakTest": "刷新 DNS 泄漏测试",
-    "StartSpeedTest": "开始网速测试",
+    "SpeedTestButton": "开始/暂停网速测试",
     "ToggleMaps": "打开/关闭地图显示",
     "SourceSelect": "选择 IP 归属地数据来源",
     "ShowASNInfo": "显示 AS 详细信息",
@@ -120,7 +141,7 @@
   "speedtest": {
     "id": "speedtest",
     "Title": "网速测试",
-    "Note": "将从 Cloudflare 使用边沿网络进行速度测试，时间可能较长。如果你的网络位于中国大陆，数据可能会有较大的偏差。测速结果仅供参考，实际速度会更快。",
+    "Note": "将从 Cloudflare 使用边沿网络进行速度测试，时间可能较长。如果你的网络位于中国大陆，数据可能会有较大的偏差。测速结果仅供参考，实际速度会更快。你可以选择下载和上传的包大小进行测试。默认情况下，测速会进行 4 次数据包上传与下载，请注意流量消耗。",
     "Download": "下载",
     "Upload": "上传",
     "Latency": "延迟",
@@ -196,7 +217,11 @@
     "RefreshConnectivityTests": "刷新连通性测试",
     "RefreshWebRTC": "刷新 WebRTC 测试",
     "RefreshDNSLeakTest": "刷新 DNS 泄漏测试",
-    "StartSpeedTest": "开始网速测试",
+    "SpeedTestButton": "开始/暂停网速测试",
+    "PingTest": "打开全球延迟测试面板",
+    "MTRTest": "打开全球路由测试面板",
+    "RuleTest": "打开规则测试面板",
+    "DNSResolver": "打开 DNS 解析器面板",
     "ToggleMaps": "切换地图显示",
     "IPCheck": "IP 查询",
     "AddBingMapKey": "添加 Bing Map API Key",
@@ -485,6 +510,24 @@
           {
             "type": "improve",
             "change": "优化了部分逻辑"
+          }
+        ]
+      },
+      {
+        "version": "v3.6",
+        "date": "Mar 10, 2024",
+        "content": [
+          {
+            "type": "add",
+            "change": "添加 DNS 解析功能"
+          },
+          {
+            "type": "improve",
+            "change": "优化主页结构，高级功能折叠展示"
+          },
+          {
+            "type": "improve",
+            "change": "优化了程序逻辑"
           }
         ]
       }

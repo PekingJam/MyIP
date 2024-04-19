@@ -16,11 +16,11 @@
 
         <div>
           <input class="form-check-input" type="checkbox" role="button" id="toggleMapSwitch" @change="toggleMaps"
-            aria-label="Toggle Map Display" :checked="isMapShown" :disabled="!isEnvBingMapKey"
+            aria-label="Toggle Map Display" :checked="isMapShown" :disabled="!configs.bingMap"
             @click="$trackEvent('IPCheck', 'ToggleClick', 'ShowMap');">
 
           <label class="form-check-label" for="toggleMapSwitch">
-            <i :class="['bi', isEnvBingMapKey ? 'bi bi-map-fill' : 'bi bi-map']" aria-hidden="true"
+            <i :class="['bi', configs.bingMap ? 'bi bi-map-fill' : 'bi bi-map']" aria-hidden="true"
               aria-label="Toggle Map Display" v-tooltip="$t('Tooltips.ToggleMaps')"></i>
           </label>
         </div>
@@ -61,11 +61,11 @@
       <div class="row">
         <div v-for="(card, index) in ipDataCards" :key="card.id" :ref="card.id"
           :class="{ 'jn-opacity': !card.ip || card.ip === $t('ipInfos.IPv4Error') || card.ip === $t('ipInfos.IPv6Error'), 'col-xl-4': true, 'col-lg-6': true, 'col-md-6': true, 'mb-4': true }">
-          <div class="card jn-card" :class="{
-      'dark-mode dark-mode-border': isDarkMode,
-      'jn-ip-card1': !isMobile && ipGeoSource === 0,
-      'jn-ip-card2': !isMobile && ipGeoSource !== 0,
-    }">
+          <div class="card jn-card keyboard-shortcut-card" :class="{
+            'dark-mode dark-mode-border': isDarkMode,
+            'jn-ip-card1': !isMobile && ipGeoSource === 0,
+            'jn-ip-card2': !isMobile && ipGeoSource !== 0,
+          }">
             <div class="card-header jn-ip-title jn-link1"
               :class="{ 'dark-mode-title': isDarkMode, 'bg-light': !isDarkMode }" style="font-weight: bold;">
               <span>
@@ -77,16 +77,15 @@
                 <i class="bi bi-arrow-clockwise"></i></button>
             </div>
             <div class="p-3 placeholder-glow " :class="{
-      'dark-mode-title': isDarkMode,
-      'jn-link2-dark': isDarkMode,
-      'bg-light': !isDarkMode,
-      'jn-link2': !isDarkMode
-    }">
+              'dark-mode-title': isDarkMode,
+              'jn-link2-dark': isDarkMode,
+              'bg-light': !isDarkMode,
+              'jn-link2': !isDarkMode
+            }">
               <span class="jn-text col-auto">
                 <i class="bi bi-pc-display-horizontal"></i>&nbsp;
               </span>
-              <span v-if="card.ip"
-                class="col-10" :class="{ 'jn-ip-font': (isMobile && card.ip.length > 32) }">
+              <span v-if="card.ip" class="col-10" :class="{ 'jn-ip-font': (isMobile && card.ip.length > 32) }">
                 {{ card.ip }}&nbsp;
                 <i v-if="isValidIP(card.ip)"
                   :class="copiedStatus[card.id] ? 'bi bi-clipboard-check-fill' : 'bi bi-clipboard-plus'"
@@ -98,7 +97,7 @@
 
 
             <div v-if="(card.asn) || (card.ip === $t('ipInfos.IPv4Error')) || (card.ip === $t('ipInfos.IPv6Error'))
-      " class="card-body" :id="'IPInfo-' + (index + 1)">
+            " class="card-body" :id="'IPInfo-' + (index + 1)">
               <ul class="list-group list-group-flush" v-if="card.country_name">
 
                 <img v-if="isMapShown" :src="isDarkMode ? card.mapUrl_dark : card.mapUrl"
@@ -185,8 +184,9 @@
                     {{ $t('ipInfos.ASN') }} :&nbsp;
                   </span>
                   <span v-if="card.asnlink" class="col-9 ">
-                    {{ card.asn }} <i class="bi bi-info-circle" @click="getASNInfo(card.asn, index)"
-                      data-bs-toggle="collapse" :data-bs-target="'#' + 'collapseASNInfo-' + index" aria-expanded="false"
+                    {{ card.asn }} <i v-if="configs.cloudFlare" class="bi bi-info-circle"
+                      @click="getASNInfo(card.asn, index)" data-bs-toggle="collapse"
+                      :data-bs-target="'#' + 'collapseASNInfo-' + index" aria-expanded="false"
                       :aria-controls="'collapseASNInfo-' + index" role="button"
                       :aria-label="'Display AS Info of' + card.asn"
                       v-tooltip="{ title: $t('Tooltips.ShowASNInfo'), placement: 'right' }"></i>
@@ -252,11 +252,13 @@ export default {
     const isDarkMode = computed(() => store.state.isDarkMode);
     const isMobile = computed(() => store.state.isMobile);
     const ipGeoSource = computed(() => store.state.ipGeoSource);
+    const configs = computed(() => store.state.configs);
 
     return {
       isDarkMode,
       isMobile,
       ipGeoSource,
+      configs,
     };
   },
 
@@ -438,46 +440,54 @@ export default {
       this.isCardsCollapsed = !this.isCardsCollapsed;
     },
 
-    // 验证 Bing Map Key
-    validateBingMapKey() {
-      fetch('/api/validate-map-key')
-        .then(response => response.json())
-        .then(data => {
-          this.isEnvBingMapKey = data.isValid;
-          if (!this.isEnvBingMapKey) {
-            this.isMapShown = false;
-          } else if (localStorage.getItem("isMapShown")) {
-            this.isMapShown = localStorage.getItem("isMapShown") === "true";
-          }
-        })
-        .catch(error => {
-          console.error('Error validating Bing Map Key:', error);
-          this.isEnvBingMapKey = false;
-          this.isMapShown = false;
-        });
-    },
-
     // 从中国来源获取 IP 地址
     getIPfromCNSource() {
-      // this.getIPFromIPIP().catch(() => {
-        this.getIPFromTaobao();
-      // });
+      this.getIPFromIPIP().catch(() => {
+        this.getIPFromTaobao().catch(() => {
+          this.getIPFromQQ();
+        })
+      });
     },
 
     // 从淘宝获取 IP 地址
     getIPFromTaobao() {
-      window.ipCallback = (data) => {
-        let ip = data.ip;
-        this.ipDataCards[0].source = "TaoBao";
-        this.fetchIPDetails(0, ip);
-        this.IPArray = [...this.IPArray, ip];
+      return new Promise((resolve, reject) => {
+        let script = document.createElement("script");
+        script.src = "https://www.taobao.com/help/getip.php?callback=ipCallback";
+        document.head.appendChild(script);
 
-        document.head.removeChild(script);
-        delete window.ipCallback;
-      };
-      let script = document.createElement("script");
-      script.src = "https://www.taobao.com/help/getip.php?callback=ipCallback";
-      document.head.appendChild(script);
+        window.ipCallback = (data) => {
+          try {
+            let ip = data.ip;
+            this.ipDataCards[0].source = "TaoBao";
+            this.fetchIPDetails(0, ip);
+            this.IPArray = [...this.IPArray, ip];
+
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            resolve(ip);
+          } catch (error) {
+            console.error("Error processing IP data from Taobao:", error);
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            reject(new Error("Failed to process IP data from Taobao"));
+          }
+        };
+        // 设置超时拒绝 Promise，以防万一请求挂起
+        script.onerror = () => {
+          console.error("Error loading script for IP data from Taobao");
+          document.head.removeChild(script);
+          delete window.ipCallback;
+          reject(new Error("Script loading error for IP data from Taobao"));
+        };
+        setTimeout(() => {
+          if (document.head.contains(script)) {
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            reject(new Error("Request to Taobao timed out"));
+          }
+        }, 2000);
+      });
     },
 
     // 从 IPIP.net 获取 IP 地址
@@ -495,20 +505,59 @@ export default {
       }
     },
 
+    // 从 QQ Video 获取 IP 地址
+    getIPFromQQ() {
+      return new Promise((resolve, reject) => {
+        // 动态创建 script 标签发起 JSONP 请求
+        let script = document.createElement("script");
+        script.src = "https://vv.video.qq.com/checktime?otype=json&callback=ipCallback";
+        document.head.appendChild(script);
+
+        // 设置成功获取数据的回调
+        window.ipCallback = (data) => {
+          try {
+            let ip = data.ip;
+            this.ipDataCards[0].source = "QQ.com";
+            this.fetchIPDetails(0, ip);
+            this.IPArray = [...this.IPArray, ip];
+
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            resolve(ip); // 成功获取 IP，解决 Promise
+          } catch (error) {
+            console.error("Error processing IP data from QQ:", error);
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            reject(new Error("Failed to process IP data from QQ"));
+          }
+        };
+
+        // 设置超时拒绝 Promise，以防万一请求挂起
+        script.onerror = () => {
+          console.error("Error loading script for IP data from QQ");
+          document.head.removeChild(script);
+          delete window.ipCallback;
+          reject(new Error("Script loading error for IP data from QQ"));
+        };
+
+        setTimeout(() => {
+          if (document.head.contains(script)) {
+            console.error("Request to QQ timed out");
+            document.head.removeChild(script);
+            delete window.ipCallback;
+            reject(new Error("Request to QQ timed out"));
+          }
+        }, 2000);
+      });
+    },
+
+
     // 从特殊源获取 IP 地址
     async getIPFromSpecial() {
-      try {
-        const response = await fetch('/api/validate-site');
-        const data = await response.json();
-        // 将 data.isIpCheckEnabled 写入到 vuex 的 Global_siteValidate 中
-        this.$store.commit('updateGlobalSiteValidate', data.isIpCheckEnabled);
-        if (data.isIpCheckEnabled) {
-          await this.getIPFromGCR();
-        } else {
-          await this.getIPFromUpai();
-        }
-      } catch (error) {
-        console.error("Error in getIPFromSpecial:", error);
+      if (this.configs.originalSite) {
+        await this.getIPFromGCR();
+      } else {
+        await this.getIPFromUpai();
       }
     },
 
@@ -529,7 +578,7 @@ export default {
         this.fetchIPDetails(1, ip);
       } catch (error) {
         console.error("Error fetching IP from Upai:", error);
-        this.ipDataCards[1].ip = this.$t('ipInfos.IPv4Error');
+        this.getIPFromCloudflare_CN(); // 故障转移
       }
     },
 
@@ -549,8 +598,27 @@ export default {
         this.ipDataCards[1].source = "IPinfo";
         this.fetchIPDetails(1, ip);
       } catch (error) {
-        console.error("Error fetching IP from IPinfo:", error);
-        this.getIPFromUpai(); // 如果发生错误，调用 getIPFromUpai
+        console.error("Error fetching IP from IPCheck.ing:", error);
+        this.getIPFromCloudflare_CN(); // 故障转移
+      }
+    },
+
+    // 从 Cloudflare 中国获取 IP 地址
+    async getIPFromCloudflare_CN() {
+      try {
+        const response = await fetch("https://cf-ns.com/cdn-cgi/trace");
+        const data = await response.text();
+        const lines = data.split("\n");
+        const ipLine = lines.find((line) => line.startsWith("ip="));
+        if (ipLine) {
+          const ip = ipLine.split("=")[1];
+          this.IPArray = [...this.IPArray, ip];
+          this.ipDataCards[1].source = "CF-CN";
+          this.fetchIPDetails(1, ip);
+        }
+      } catch (error) {
+        console.error("Error fetching IP from Cloudflare:", error);
+        this.ipDataCards[1].ip = this.$t('ipInfos.IPv4Error');
       }
     },
 
@@ -681,6 +749,7 @@ export default {
             }
           } catch (error) {
             console.error("Error fetching IP details from source " + source.id + ":", error);
+            this.sources[source.id].enabled = false;
             currentSourceIndex = (currentSourceIndex + 1) % sources.length;
             attempts++;
           }
@@ -860,6 +929,14 @@ export default {
           this.getIPFromIPIP(card);
           this.$trackEvent('IPCheck', 'RefreshClick', 'IPIP.net');
           break;
+        case "QQ.com":
+          this.getIPFromQQ(card);
+          this.$trackEvent('IPCheck', 'RefreshClick', 'QQ.com');
+          break;
+        case "CF-CN":
+          this.getIPFromCloudflare_CN(card);
+          this.$trackEvent('IPCheck', 'RefreshClick', 'CF-CN');
+          break;
         default:
           console.error("Undefind Source:", card.source);
       }
@@ -922,11 +999,6 @@ export default {
 
   },
 
-  created() {
-    this.validateBingMapKey();
-  },
-
-
   watch: {
     isMapShown(newVal) {
       localStorage.setItem("isMapShown", JSON.stringify(newVal));
@@ -986,5 +1058,8 @@ export default {
   width: 2px;
   border-left: 2px dashed #e3e3e3;
   z-index: 1;
+}
+.dropdown-item.disabled, .dropdown-item:disabled {
+  text-decoration: line-through;
 }
 </style>
