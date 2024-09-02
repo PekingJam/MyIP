@@ -1,6 +1,7 @@
 // api/dnsresolver.js
 import { Resolver } from 'dns';
 import { promisify } from 'util';
+import { refererCheck } from '../common/referer-check.js';
 
 // 普通 DNS 服务器列表
 const dnsServers = {
@@ -33,6 +34,7 @@ const resolveDns = async (hostname, type, name, server) => {
     const resolveTxtAsync = promisify(resolver.resolveTxt.bind(resolver));
     const resolveCnameAsync = promisify(resolver.resolveCname.bind(resolver));
     const resolveNSAsync = promisify(resolver.resolveNs.bind(resolver));
+    const resolveMXAsync = promisify(resolver.resolveMx.bind(resolver));
     try {
         let addresses;
 
@@ -54,6 +56,11 @@ const resolveDns = async (hostname, type, name, server) => {
                 break;
             case 'NS':
                 addresses = await resolveNSAsync(hostname);
+                break;
+            case 'MX':
+                addresses = await resolveMXAsync(hostname);
+                addresses = addresses.map(item => `${item.priority} ${item.exchange}.`)
+                .join(', ');
                 break;
             default:
                 throw new Error('Unsupported type');
@@ -95,15 +102,9 @@ const dnsResolver = async (req, res) => {
     }
 
     // 限制只能从指定域名访问
-    const allowedDomains = ['localhost', ...(process.env.ALLOWED_DOMAINS || '').split(',')];
     const referer = req.headers.referer;
-    if (referer) {
-        const domain = new URL(referer).hostname;
-        if (!allowedDomains.includes(domain)) {
-            return res.status(403).json({ error: 'Access denied' });
-        }
-    } else {
-        return res.status(403).json({ error: 'What are you doing?' });
+    if (!refererCheck(referer)) {
+        return res.status(403).json({ error: referer ? 'Access denied' : 'What are you doing?' });
     }
 
     const { hostname, type } = req.query;
